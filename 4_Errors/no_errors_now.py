@@ -36,15 +36,20 @@ def get_links_from_sections(section):
         print('This happen:\n')
         print(e)
 
-    urls_el_pais =[ art_principal_url , art_secondary_urls , art_terciary_urls]
+    urls_section =[]
+    urls_section.append(art_principal_url)
+    urls_section.extend(art_secondary_urls)
+    urls_section.extend(art_terciary_urls)
 
-    return urls_el_pais
+    return urls_section
 
-urls_all_section = []
 
-for i in range(3):
+print(get_links_from_sections(nav_sections_urls[0]))
+# urls_all_section = []
 
-    links = get_links_from_sections(nav_sections_urls[i])
-    urls_all_section.append(links)
+# for i in range(3):
 
-print(urls_all_section)
+#     links = get_links_from_sections(nav_sections_urls[i])
+#     urls_all_section.append(links)
+
+# print(urls_all_section)
