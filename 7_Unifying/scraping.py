@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 
-url = 'https://www.pagina12.com.ar'
+
 def get_url_sections(url):
     try:
         p12 = requests.get(url)
@@ -15,8 +15,6 @@ def get_url_sections(url):
     except Exception as e:
         print("There was an error getting the url's")
         print(e)
-
-urls_sections =get_url_sections(url)
 
 def get_urls_notes(urls_sections):
     try:
@@ -31,8 +29,6 @@ def get_urls_notes(urls_sections):
     except Exception as e:
         print('There was an error getting the info')
         print(e)
-
-urls_each_note = get_urls_notes(urls_sections[0])
 
 def get_info_notes(urls_each_note):
     try:
@@ -70,8 +66,6 @@ def get_info_notes(urls_each_note):
         print('There was an error in the data extraction')
         print(e)
 
-dict_each_note = get_info_notes(urls_each_note[0])
-
 # print(dict_each_note)
 
 def get_all_notes_info(url):
@@ -90,8 +84,11 @@ def get_all_notes_info(url):
         print('There was an error getting all notes information')
         print(e)
 
-all_notes_info = get_all_notes_info(url)
 
-df = pd.DataFrame(all_notes_info)
-df.to_csv('Notas Pagina12.csv')
-df.head()
+if __name__ == '__main__':
+    
+    url = 'https://www.pagina12.com.ar'
+    all_notes_info = get_all_notes_info(url)
+    df = pd.DataFrame(all_notes_info)
+    df.to_csv('Notas Pagina12.csv')
+    df.head()
