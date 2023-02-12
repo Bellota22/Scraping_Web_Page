@@ -48,26 +48,34 @@ url_notas = get_links_from_sections(nav_sections_urls[0])
 
 url_first_note = url_notas[0]
 # print(url_notas[0])
+def return_dict_note(url_first_note):
+    info_dict = {}
 
-try:
-    nota = requests.get(url_first_note)
-    if nota.status_code == 200:
-        s_nota = BeautifulSoup(nota.text, 'lxml')
-        # Extraemos el titulo
-        titulo = s_nota.find('div', attrs = {'class': 'col 2-col'}).find('h1')
-        # print(titulo.text)
-        fecha = s_nota.find('time').get('datetime')
-        # print(fecha)
-        volanta = s_nota.find('h3', attrs = {'class':'h4'}).text
-        # print(volanta)
-        cuerpo = s_nota.find('div', attrs = {'class':'article-text'}).find_all('p')
-        articulo_text = ''
-        for texto in cuerpo:
-            articulo_text += texto.text
-        print(articulo_text)
-except Exception as e:
-    print('Error')
-    print(e)
+    try:
+        nota = requests.get(url_first_note)
+        if nota.status_code == 200:
+            s_nota = BeautifulSoup(nota.text, 'lxml')
+            # Extraemos el titulo
+            titulo = s_nota.find('div', attrs = {'class': 'col 2-col'}).find('h1')
+            info_dict['titulo'] = titulo.text
+
+            fecha = s_nota.find('time').get('datetime')
+            info_dict['fecha'] = fecha
+
+            volanta = s_nota.find('h3', attrs = {'class':'h4'}).text
+            info_dict['volanta'] = volanta
+
+
+            cuerpo = s_nota.find('div', attrs = {'class':'article-text'}).find_all('p')
+            articulo_text = ''
+            for texto in cuerpo:
+                articulo_text += texto.text
+            info_dict['cuerpo'] = articulo_text
+
+        return info_dict
+    except Exception as e:
+        print('Error')
+        print(e)
 
 
 # Extracting the image
@@ -75,6 +83,7 @@ def extracting_img_from_note(note):
     try:
         img = requests.get(note)
 
+        info_dict = {}
         if img.status_code == 200:
             s_img = BeautifulSoup(img.text,'lxml')
 
