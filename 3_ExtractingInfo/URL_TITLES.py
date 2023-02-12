@@ -4,8 +4,6 @@ from bs4 import BeautifulSoup
 url = 'https://www.pagina12.com.ar'
 p12 = requests.get(url)
 
-
-
 s = BeautifulSoup(p12.text, 'lxml')
 
 # List items
